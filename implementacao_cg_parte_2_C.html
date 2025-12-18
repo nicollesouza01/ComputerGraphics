@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Implementação Computação Gráfica - Parte 2 (C)</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+      background: #f2f3f5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      background: #fafafa;
+      padding: 24px 32px 32px;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+      text-align: center;
+    }
+
+    h1 { font-size: 20px; margin-bottom: 6px; }
+
+    .team { font-size: 13px; color: #555; margin-bottom: 12px; }
+
+    .controls {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      margin-bottom: 12px;
+      font-size: 13px;
+    }
+
+    canvas {
+      background: #e6e6e6;
+      border-radius: 12px;
+      cursor: pointer;
+    }
+
+    .hint { margin-top: 10px; font-size: 12px; color: #666; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Implementação Computação Gráfica – Parte 2 (C)</h1>
+    <div class="team">Equipe: Danielly Silva · Lucas Ribeiro · Nicolle Souza · Paulo Victor</div>
+
+    <div class="controls">
+      <label>Cor inicial <input type="color" id="colorStart" value="#ff0000"></label>
+      <label>Cor final <input type="color" id="colorEnd" value="#00ff00"></label>
+    </div>
+
+    <canvas id="canvas" width="360" height="360"></canvas>
+    <div class="hint">Clique em qualquer pixel para iniciar o triângulo</div>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+    const colorStart = document.getElementById('colorStart');
+    const colorEnd = document.getElementById('colorEnd');
+
+    const pixelSize = 18;
+    const cols = canvas.width / pixelSize;
+    const rows = canvas.height / pixelSize;
+
+    let origin = null;
+    let animating = false;
+
+    function lerp(a, b, t) {
+      return a + (b - a) * t;
+    }
+
+    function hexToRgb(hex) {
+      const v = hex.replace('#', '');
+      return {
+        r: parseInt(v.substring(0, 2), 16),
+        g: parseInt(v.substring(2, 4), 16),
+        b: parseInt(v.substring(4, 6), 16)
+      };
+    }
+
+    function interpolatedColor(t) {
+      const c1 = hexToRgb(colorStart.value);
+      const c2 = hexToRgb(colorEnd.value);
+
+      const r = Math.floor(lerp(c1.r, c2.r, t));
+      const g = Math.floor(lerp(c1.g, c2.g, t));
+      const b = Math.floor(lerp(c1.b, c2.b, t));
+      return `rgb(${r}, ${g}, ${b})`;
+    }
+
+    function drawTriangle(step) {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      for (let y = 0; y <= step; y++) {
+        if (origin.y + y >= rows) break;
+
+        const t = y / rows;
+        ctx.fillStyle = interpolatedColor(t);
+
+        for (let x = 0; x <= y; x++) {
+          if (origin.x + x < cols) {
+            ctx.fillRect(
+              (origin.x + x) * pixelSize,
+              (origin.y + y) * pixelSize,
+              pixelSize,
+              pixelSize
+            );
+          }
+        }
+      }
+    }
+
+    canvas.addEventListener('click', (e) => {
+      if (animating) return;
+      animating = true;
+
+      const rect = canvas.getBoundingClientRect();
+      origin = {
+        x: Math.floor((e.clientX - rect.left) / pixelSize),
+        y: Math.floor((e.clientY - rect.top) / pixelSize)
+      };
+
+      let step = 0;
+      const interval = setInterval(() => {
+        drawTriangle(step);
+        step++;
+        if (origin.y + step >= rows) {
+          clearInterval(interval);
+          animating = false;
+        }
+      }, 70);
+    });
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+  </script>
+</body>
+</html>
