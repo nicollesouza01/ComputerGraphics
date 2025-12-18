@@ -1,0 +1,17 @@
+# Projeto de Computação Gráfica
+
+Este repositório contém os trabalhos desenvolvidos para a disciplina de Computação Gráfica.
+
+## 📂 Estrutura do Repositório
+
+* **modelagens trab 1**: Contém os modelos 3D do TRABALHO N2 A-1, que no geral são modelos mais simples, dado o período de iniciação prática no Blender.
+* **modelagens trab 2 (final)**: Entrega final de modelos com cenários e texturas complexas (incluindo fundos 4K) usando o Blender, como requisitos obrigatórios do Trabalho N2 Final da disciplina.
+* **scripts**: Implementações com códigos utilizados nos trabalhos, cada um identificado como sua questão correspondente a cada trabalho, o A-1 e o Final.
+* **pratica15_12**: Exercício prático realizados em aula como requisito obrigatório do Trabalho Final da disciplina (realizado em 15/12/25).
+
+## 🛠️ Tecnologias Utilizadas
+* Git para controle de versão.
+* Arquivos de modelagem 3D e texturas (.exr, etc).
+
+## 👤 Autora
+* **Nicolle Souza** - [Seu Perfil no GitHub](https://github.com/nicollesouza01)
