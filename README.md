@@ -8,6 +8,7 @@ Este repositório contém os trabalhos desenvolvidos para a disciplina de Comput
 * **modelagens trab 2 (final)**: Entrega final de modelos com cenários e texturas complexas (incluindo fundos 4K) usando o Blender, como requisitos obrigatórios do Trabalho N2 Final da disciplina.
 * **scripts**: Implementações com códigos utilizados nos trabalhos, cada um identificado como sua questão correspondente a cada trabalho, o A-1 e o Final.
 * **pratica15_12**: Exercício prático realizados em aula como requisito obrigatório do Trabalho Final da disciplina (realizado em 15/12/25).
+* **implementações - trabalho final - parte 2**: Implementações em JavaScript dos requisitos opcionais do Trabalho final.
 
 ## 🛠️ Tecnologias Utilizadas
 * Octave, JavaScript, HTML e CSS.
