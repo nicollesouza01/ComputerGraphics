@@ -17,5 +17,5 @@ Este repositório contém os trabalhos desenvolvidos para a disciplina de Comput
 ## 🤝 Colaboradores
 * **Danielly Silva** - [Perfil no Github](https://github.com/ddniellysilva)
 * **Lucas Ribeiro** - [Perfil no Github](https://github.com/LUKASRIB15)
-* * **Nicolle Souza** - [Perfil no GitHub](https://github.com/nicollesouza01)
+* **Nicolle Souza** - [Perfil no GitHub](https://github.com/nicollesouza01)
 * **Paulo Victor Oliveira** - [Perfil no Github](https://github.com/paulo-victor10)
