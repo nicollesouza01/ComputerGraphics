@@ -10,8 +10,11 @@ Este repositório contém os trabalhos desenvolvidos para a disciplina de Comput
 * **pratica15_12**: Exercício prático realizados em aula como requisito obrigatório do Trabalho Final da disciplina (realizado em 15/12/25).
 
 ## 🛠️ Tecnologias Utilizadas
-* Git para controle de versão.
-* Arquivos de modelagem 3D e texturas (.exr, etc).
+* Octave, JavaScript, HTML e CSS.
+* Blender 3D. 
 
-## 👤 Autora
-* **Nicolle Souza** - [Seu Perfil no GitHub](https://github.com/nicollesouza01)
+## 🤝 Colaboradores
+* **Danielly Silva** - [Perfil no Github](https://github.com/ddniellysilva)
+* **Lucas Ribeiro** - [Perfil no Github](https://github.com/LUKASRIB15)
+* * **Nicolle Souza** - [Perfil no GitHub](https://github.com/nicollesouza01)
+* **Paulo Victor Oliveira** - [Perfil no Github](https://github.com/paulo-victor10)
