@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Quadrados Rotacionados - Computação Gráfica</title>
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      background: #f4f6f8;
+      color: #222;
+      font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    #controls {
+      width: 320px;
+      padding: 24px;
+      background: #ffffff;
+      border-right: 1px solid #e0e0e0;
+      box-shadow: 2px 0 10px rgba(0,0,0,0.05);
+    }
+
+    #controls h1 {
+      font-size: 18px;
+      margin: 0 0 10px 0;
+    }
+
+    #controls h2 {
+      font-size: 14px;
+      font-weight: 500;
+      margin: 0 0 20px 0;
+      color: #555;
+    }
+
+    .info {
+      font-size: 13px;
+      color: #555;
+      margin-bottom: 20px;
+      line-height: 1.4;
+    }
+
+    .control {
+      margin-bottom: 18px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 13px;
+      color: #333;
+    }
+
+    input[type="range"],
+    input[type="number"],
+    input[type="color"] {
+      width: 100%;
+      cursor: pointer;
+    }
+
+    .hint {
+      font-size: 11px;
+      color: #888;
+      margin-top: 4px;
+    }
+
+    #canvas-container {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    canvas {
+      background: #000;
+      border-radius: 8px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+    }
+  </style>
+</head>
+<body>
+
+  <div id="controls">
+    <h1>Implementação Computação Gráfica</h1>
+    <h2>Parte 2 (E) – Quadrados</h2>
+
+    <div class="info">
+      <strong>Equipe:</strong><br>
+      Danielly Silva<br>
+      Lucas Ribeiro<br>
+      Nicolle Souza<br>
+      Paulo Victor
+    </div>
+
+    <div class="control">
+      <label>Quantidade de quadrados (N)</label>
+      <input type="number" id="count" value="50" min="1" max="300" />
+    </div>
+
+    <div class="control">
+      <label>Escala por iteração</label>
+      <input type="range" id="scale" min="0.90" max="0.99" step="0.002" value="0.96" />
+    </div>
+
+    <div class="control">
+      <label>Incremento de rotação (graus)</label>
+      <input type="range" id="rotation" min="0" max="25" step="0.25" value="6" />
+      <div class="hint">Scroll do mouse também controla a rotação</div>
+    </div>
+
+    <div class="control">
+      <label>Cor inicial</label>
+      <input type="color" id="colorStart" value="#ffffff" />
+    </div>
+
+    <div class="control">
+      <label>Cor final</label>
+      <input type="color" id="colorEnd" value="#cccccc" />
+    </div>
+  </div>
+
+  <div id="canvas-container">
+    <canvas id="canvas" width="720" height="720"></canvas>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+
+    const countInput = document.getElementById('count');
+    const scaleInput = document.getElementById('scale');
+    const rotationInput = document.getElementById('rotation');
+    const colorStartInput = document.getElementById('colorStart');
+    const colorEndInput = document.getElementById('colorEnd');
+
+    function hexToRgb(hex) {
+      const bigint = parseInt(hex.slice(1), 16);
+      return {
+        r: (bigint >> 16) & 255,
+        g: (bigint >> 8) & 255,
+        b: bigint & 255
+      };
+    }
+
+    function interpolateColor(c1, c2, t) {
+      const r = Math.round(c1.r + (c2.r - c1.r) * t);
+      const g = Math.round(c1.g + (c2.g - c1.g) * t);
+      const b = Math.round(c1.b + (c2.b - c1.b) * t);
+      return `rgb(${r},${g},${b})`;
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.save();
+
+      ctx.translate(canvas.width / 2, canvas.height / 2);
+
+      const N = parseInt(countInput.value);
+      const scaleFactor = parseFloat(scaleInput.value);
+      const rotationRad = parseFloat(rotationInput.value) * Math.PI / 180;
+
+      const startColor = hexToRgb(colorStartInput.value);
+      const endColor = hexToRgb(colorEndInput.value);
+
+      let size = canvas.width * 0.85;
+      let angle = 0;
+
+      for (let i = 0; i < N; i++) {
+        const t = i / (N - 1 || 1);
+        ctx.save();
+        ctx.rotate(angle);
+        ctx.strokeStyle = interpolateColor(startColor, endColor, t);
+        ctx.lineWidth = Math.max(1, 6 * (1 - t));
+        ctx.strokeRect(-size / 2, -size / 2, size, size);
+        ctx.restore();
+
+        size *= scaleFactor;
+        angle += rotationRad;
+      }
+
+      ctx.restore();
+    }
+
+    document.querySelectorAll('#controls input').forEach(input => {
+      input.addEventListener('input', draw);
+    });
+
+    window.addEventListener('wheel', (e) => {
+      e.preventDefault();
+      let value = parseFloat(rotationInput.value);
+      value += e.deltaY < 0 ? 0.25 : -0.25;
+      value = Math.max(0, Math.min(25, value));
+      rotationInput.value = value;
+      draw();
+    }, { passive: false });
+
+    draw();
+  </script>
+</body>
+</html>
